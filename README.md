@@ -25,4 +25,22 @@
         - `/Logs/{protein}_{ligand}_{iteration}.txt` is the log file, which contains the affinities for nine poses
         - `/Result/{protein}_{ligand}_{iteration}.pdbqt` is the docking position file, which contains the coordinates of the nine poses
 ---
-- `analyze.py
+- `analyze.py`
+  - Accepts a threshold value as input, which can filter out low affinity compounds
+  - Reads `/Input/Zinc_dataset.txt` to get list of compounds
+  - Writes the protein, ligand, iteration, affinities of the nine positions into `/Analysis/{protein}({threshold}).csv`
+---
+- `distance_search.py`
+  - ***This script calculates the minimum distances of compounds to key residues and implements Pair Score to rank agonist possibility***
+  - Defines blacklist as residues that the compound should not interact with, likely because it is the substrate or coenzyme binding site
+  - Defines whitelist as residues that the compound should interact with
+  - Reads `/Result/{protein}.pdbqt` for blacklist and whitelist residues, saving their coordinates as groups for each residue
+  - Reads `/Result/{protein}_{ligand}_{iteration}.pdbqt` for the ***FIRST POSE*** of docking results, saving their coordinates in a group
+  - Implements minimum distance algorithm for each ligand / residue pair
+    - Takes one atom each from ligand / residue
+    - Calculate the ***Euclidean Distance*** between the all atom combinations
+    - Outputs minimum distance
+  - Implements Pair Score algorithm for each ligand
+    - Pair Score = numbers of whitelist residues that are within 4.0Å of the compound
+    - If any blacklist residues are within 4.0Å of the compound, automatically set Pair Score to 0
+    - Writes protein, ligand, iteration, affinity, and distances to whitelist and blacklist residues into `/Analysis/Residue Distance.csv`
