@@ -44,3 +44,12 @@
     - Pair Score = numbers of whitelist residues that are within 4.0Å of the compound
     - If any blacklist residues are within 4.0Å of the compound, automatically set Pair Score to 0
     - Writes protein, ligand, iteration, affinity, and distances to whitelist and blacklist residues into `/Analysis/Residue Distance.csv`
+---
+- `pose_distribution.py`
+  - ***3D SCATTERPLOT with docking position clustering with noise elimination (only first position)***
+  - Reads `/Input/ligands.txt` for ligand names
+  - Iterates through each ligand: `/Result/{protein}_{ligand}_{iteration}.pdbqt` and read the atom positions of the first position
+  - Uses DBSCAN with epsilon value of `1.0` for position clustering
+  - Filters out `cluster -1`, which is noise and `cluster 3`, which consists of atoms less than one compound
+  - Reads `/Result/{protein}.pdbqt` for atom positions of the protein
+  - Adds the protein to the plot with different color
