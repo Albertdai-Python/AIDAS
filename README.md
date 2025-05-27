@@ -1,5 +1,5 @@
-# CLEAR-FACE
-## Computational Ligand Exploration for ALDH2 Restoration – Finding Activators &amp; Catalytic Enhancers
+# AIDAS
+## ALDH2 In silico Docking & Activator-Screening
 ---
 ### What does each script do?
 - `main.py`
