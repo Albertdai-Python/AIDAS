@@ -1,5 +1,6 @@
 # AIDAS
 ## ALDH2 In silico Docking & Activator-Screening
+![alt text](https://github.com/Albertdai-Python/AIDAS/blob/Media/AIDAS_mac_icon_2.png?raw=true)
 ---
 ### What does each script do?
 - `main.py`
