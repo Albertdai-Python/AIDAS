@@ -11,10 +11,10 @@
 ---
 - `zinc_by_dataset.py`
   - ***This is the script for docking!***
-  - Grabs compounds listed in `/Input/Zinc_dataset.txt` and check if they are originally in `Data/`
+  - Grabs compounds listed in `/Input/ligands.txt` and check if they are originally in `Data/`
   - Grab the compounds from `https://zinc.docking.org/substances/{compound}.sdf`
   - Adds *Hydrogens* and *Gasteiger Charge* to compound
-  - Rewrites `/Input/Zinc_dataset.txt` with the available compounds and excludes failed ones
+  - Rewrites `/Input/ligands.txt` with the available compounds and excludes failed ones
   - Docking
       - Inputs
         - Vina directory is at `/Vina/vina`, which is an executable for Vina 1.2.0
@@ -27,7 +27,7 @@
 ---
 - `analyze.py`
   - Accepts a threshold value as input, which can filter out low affinity compounds
-  - Reads `/Input/Zinc_dataset.txt` to get list of compounds
+  - Reads `/Input/ligands.txt` to get list of compounds
   - Writes the protein, ligand, iteration, affinities of the nine positions into `/Analysis/{protein}({threshold}).csv`
 ---
 - `distance_search.py`
