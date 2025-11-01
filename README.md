@@ -1,9 +1,43 @@
 # AIDAS
-## ALDH2 In silico Docking & Activator-Screening
+## ALDH2 In silico Docking & Activator-Screening 
+### Source Code for High School Research "Hangover Cure – Searching for ALDH2 E487K Agonists" in Collaboration with China Medical University
+**Lead Programmer:** Yu-Cheng Dai\
+**Other Research Team Members:** Hong-Wei Chen, Yu-Lun Chen\
+**Mentors:** Prof. Shou-Lun Lee, Prof. Yi-Chuan Li
+ 
 ![alt text](https://github.com/Albertdai-Python/AIDAS/blob/main/Media/AIDAS_mac_icon_2.png?raw=true)
 ---
-### What does each script do?
+### Project Introduction & Motivation
+ALDH2 is an enzyme responsible for human alcohol metabolism, and the E487K East-Asian mutant produces an inactive version, causing harm to the human body. Through molecular docking simulations with [Autodock Vina](https://github.com/ccsb-scripps/AutoDock-Vina), we can acquire the binding position and affinity of a ligand and a given protein (ALDH2), thereby determining its likelihood of affecting enzyme activity. However, there are two major flaws to this approach: 
+- First, given the large number of chemical and biological compounds, we would have to hand-pick compounds. 
+- Second, it is difficult to determine whether a binding ligand acts as an inhibitor or an agonist to the enzyme solely via molecular docking. 
+
+To combat these issues, our project considers the molecular structure of existing enzyme agonists as a template, performing mass screening on compounds from the [ZINC database](https://zinc.docking.org/) using molecular similarity and ranking them from highest to lowest similarity for docking priority.
+
+For compounds with a molecular similarity (to an existing agonist) above a given threshold, our scripts perform automated molecular docking using an executable version of [Autodock Vina](https://github.com/ccsb-scripps/AutoDock-Vina).
+
+Our scripts then compare enzyme residues near existing agonists to the target ligand, calculating a **Pair Score** to allow easy *in-silico* evaluation of whether a ligand is a potential agonist.
+
+Our pipeline provides automation for both molecular similarity comparison and molecular docking, taking protein code, existing agonists, and other Vina-specified parameters as input, while outputting a CSV file for final evaluation.
+
+---
+### Achieved Results
+Our project has helped us perform over 560 million similarities comparisons and 9100 molecular docking instances. 
+
+Ultimately, 7 compounds were identified as potential ALDH2 agonists.
+
+---
+### Future Directions
+- Test script viability with other enzymes
+- Design full-fledged Pair Score algorithm for individual residue weights & biases
+- Incorporate self-designed neural network with molecular similarity for pre-docking screening
+- Integrate ADMET (absorption, distribution, metabolism, excretion, toxicity) prediction after Pair Score calculation
+- Build GUI for easier usage
+
+---
+### Detailed Functions of Each Script
 - `main.py`
+  - ***Docking Preparation and Similarity Calculation***
   - Downloads *SMILES* and *ZINC_ID* in tranches from `/Input/ZINC-downloader-3D-smi.txt`
   - Writes *ZINC_ID* and *SMILES* into `/SMILES/zinc_compounds.db` with ***sqlite3***
   - Converts compounds from *SMILES* 
@@ -11,7 +45,7 @@
   - Outputs `/SMILES/Similarity Ranking.csv`
 ---
 - `zinc_by_dataset.py`
-  - ***This is the script for docking!***
+  - ***Main docking Script***
   - Grabs compounds listed in `/Input/ligands.txt` and check if they are originally in `Data/`
   - Grab the compounds from `https://zinc.docking.org/substances/{compound}.sdf`
   - Adds *Hydrogens* and *Gasteiger Charge* to compound
@@ -27,12 +61,13 @@
         - `/Result/{protein}_{ligand}_{iteration}.pdbqt` is the docking position file, which contains the coordinates of the nine poses
 ---
 - `analyze.py`
+  - ***Compound Filtering via Affinity***
   - Accepts a threshold value as input, which can filter out low affinity compounds
   - Reads `/Input/ligands.txt` to get list of compounds
   - Writes the protein, ligand, iteration, affinities of the nine positions into `/Analysis/{protein}({threshold}).csv`
 ---
 - `distance_search.py`
-  - ***This script calculates the minimum distances of compounds to key residues and implements Pair Score to rank agonist possibility***
+  - ***Calculates Minimum Distances of Compounds to Key Residues; Implements Pair Score to Rank Agonist Possibility***
   - Defines blacklist as residues that the compound should not interact with, likely because it is the substrate or coenzyme binding site
   - Defines whitelist as residues that the compound should interact with
   - Reads `/Result/{protein}.pdbqt` for blacklist and whitelist residues, saving their coordinates as groups for each residue
@@ -47,7 +82,7 @@
     - Writes protein, ligand, iteration, affinity, and distances to whitelist and blacklist residues into `/Analysis/Residue Distance.csv`
 ---
 - `pose_distribution.py`
-  - ***3D SCATTERPLOT with docking position clustering with noise elimination (only first position)***
+  - ***3D SCATTERPLOT for Docking Position Clustering***
   - Reads `/Input/ligands.txt` for ligand names
   - Iterates through each ligand: `/Result/{protein}_{ligand}_{iteration}.pdbqt` and read the atom positions of the first position
   - Uses DBSCAN with epsilon value of `1.0` for position clustering
