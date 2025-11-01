@@ -1,5 +1,5 @@
 # AIDAS
-## ALDH2 In silico Docking & Activator-Screening 
+## ALDH2 In silico Docking & Agonist-Screening 
 ### Source Code for High School Research "Hangover Cure – Searching for ALDH2 E487K Agonists" in Collaboration with China Medical University
 **Lead Programmer:** Yu-Cheng Dai\
 **Other Research Team Members:** Hong-Wei Chen, Yu-Lun Chen\
