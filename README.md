@@ -34,6 +34,18 @@ Ultimately, 7 compounds were identified as potential ALDH2 agonists.
 - Integrate ADMET (absorption, distribution, metabolism, excretion, toxicity) prediction after Pair Score calculation
 - Build GUI for easier usage
 
+
+---
+### Python Module Prerequisites
+- matplotlib
+- rdkit
+- sqlite3
+- plotly
+- sklearn
+- numpy
+- pandas
+- openbabel
+
 ---
 ### Detailed Functions of Each Script
 - `main.py`
