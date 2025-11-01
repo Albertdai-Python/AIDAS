@@ -101,3 +101,10 @@ Ultimately, 7 compounds were identified as potential ALDH2 agonists.
   - Filters out `cluster -1`, which is noise and `cluster 3`, which consists of atoms less than one compound
   - Reads `/Result/{protein}.pdbqt` for atom positions of the protein
   - Adds the protein to the plot with different color
+---
+### References
+1. Eberhardt, J., Santos-Martins, D., Tillack, A.F., Forli, S. (2021). AutoDock Vina 1.2.0: New Docking Methods, Expanded Force Field, and Python Bindings. Journal of
+Chemical Information and Modeling.
+2. Trott, O., & Olson, A. J. (2010). AutoDock Vina: improving the speed and accuracy of docking with a new scoring function, efficient optimization, and multithreading.
+Journal of computational chemistry, 31(2), 455-461.
+3. Jiang, W.; Chen, J.; Zhang, P.; Zheng, N.; Ma, L.; Zhang, Y.; Zhang, H. Repurposing Drugs for Inhibition against ALDH2 via a 2D/3D Ligand-Based Similarity Search and Molecular Simulation. Molecules 2023, 28, 7325. https://doi.org/10.3390/molecules28217325
